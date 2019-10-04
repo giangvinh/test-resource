@@ -1,0 +1,216 @@
+<div class="container" *ngIf="formGroup">
+  <form [formGroup]="formGroup" (submit)="onSave()">
+    <div class="row">
+      <div class="col-md-9">
+        <h5>Thông tin khách hàng</h5>
+        <mat-checkbox formControlName="noOrg" (change)="onCustomerTypeChange($event.checked)"
+          >Khách hàng cá nhân</mat-checkbox
+        >
+      </div>
+      <div class="col-md-3">
+        <h5>{{ contractKey }}</h5>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Đơn vị" formControlName="orgName" />
+          <mat-error *ngIf="formGroup.get('orgName').invalid">Vui lòng nhập tên đơn vị</mat-error>
+          <a
+            matSuffix
+            (click)="searchForOrg()"
+            [class]="isReview || formGroup.get('noOrg').value ? 'search-icon disabled' : 'search-icon'"
+          >
+            <i class="fa fa-search"></i>
+          </a>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Địa chỉ" formControlName="orgAddress" />
+          <mat-error *ngIf="formGroup.get('orgAddress').invalid">Vui lòng nhập địa chỉ</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="SĐT" formControlName="orgPhoneNumber" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="MST" formControlName="orgTaxCode" />
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Khách hàng/ Người đại diện pháp luật" formControlName="customerName" />
+          <mat-error *ngIf="formGroup.get('customerName').invalid"
+            >Vui lòng nhập tên khách hàng/ Người đại diện pháp luật</mat-error
+          >
+          <a
+            matSuffix
+            color="primary"
+            (click)="searchForCustomer()"
+            [class]="isReview ? 'search-icon disabled' : 'search-icon'"
+          >
+            <i class="fa fa-search"></i>
+          </a>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="SĐT" formControlName="customerPhoneNumber" />
+          <mat-error *ngIf="formGroup.get('customerPhoneNumber').invalid"
+            >Vui lòng nhập số điện thoại</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="customerEmail" />
+          <mat-error *ngIf="formGroup.get('customerEmail').invalid">Vui lòng nhập email hợp lệ</mat-error>
+        </mat-form-field>
+        <mat-form-field class="dialog-date-picker">
+          <input
+            matInput
+            [matDatepicker]="customerDoB"
+            placeholder="Ngày sinh"
+            formControlName="customerDoB"
+          />
+          <mat-datepicker-toggle matSuffix [for]="customerDoB"></mat-datepicker-toggle>
+          <mat-datepicker #customerDoB></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <h5>Thông tin HD (*)</h5>
+    <hr />
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Số HD" formControlName="contractCode" />
+        </mat-form-field>
+        <mat-form-field class="dialog-date-picker">
+          <input
+            matInput
+            [matDatepicker]="contractedDate"
+            placeholder="Ngày kí HD"
+            formControlName="contractedDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="contractedDate"></mat-datepicker-toggle>
+          <mat-datepicker #contractedDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <div class="mat-checkBox">
+          <mat-checkbox (change)="onPriceOverViewChange($event.checked)" formControlName="isPriceOverview"
+            >Giá sơ bộ</mat-checkbox
+          >
+        </div>
+        <mat-form-field>
+          <input matInput placeholder="Mã số yêu cầu thẩm đinh" formControlName="appraisalCode" />
+          <mat-error *ngIf="formGroup.get('appraisalCode').invalid"
+            >Vui lòng nhập Mã số yêu cầu thẩm định</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <mat-form-field class="textAreaInput">
+        <textarea matInput placeholder="Mục đích thẩm định" formControlName="appraisalPurpose"></textarea>
+        <mat-error *ngIf="formGroup.get('appraisalPurpose').invalid"
+          >Vui lòng nhập Mục đích thẩm định</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <h5>Nguồn khách hàng giới thiệu (*)</h5>
+    <mat-checkbox (change)="onOriginChange($event.checked)" formControlName="isSameOrg"
+      >Cùng đơn vị</mat-checkbox
+    >
+    <hr />
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Tên" formControlName="refererName" />
+          <a
+            matSuffix
+            (click)="searchForReferer()"
+            [class]="isReview ? 'search-icon disabled' : 'search-icon'"
+          >
+            <i class="fa fa-search"></i>
+          </a>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Đơn vị" formControlName="refererOrgName" />
+        </mat-form-field>
+        <mat-radio-group formControlName="source">
+          <mat-radio-button *ngFor="let source of contractSource | enumsToArray" [value]="source.id">{{
+            source.name
+          }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="SĐT" formControlName="refererPhoneNumber" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <h5>Thông tin người liên hệ</h5>
+    <hr />
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Tên" formControlName="contactPerson" />
+          <mat-error *ngIf="formGroup.get('contactPerson').invalid"
+            >Vui lòng nhập tên người liên hệ</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="SĐT" formControlName="contactPersonPhoneNumber" />
+          <mat-error *ngIf="formGroup.get('contactPersonPhoneNumber').invalid"
+            >Vui lòng nhập số điện thoại người liên hệ</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <button
+        *ngIf="!isReview"
+        mat-raised-button
+        class="btn spa-btn spa-secondary-btn"
+        type="button"
+        (click)="onNoClick()"
+      >
+        <i class="fa fa-times"></i>
+        Đóng
+      </button>
+
+      <button
+        *ngIf="!isReview && (canEdit || !isEdit)"
+        mat-raised-button
+        class="btn spa-btn spa-primary-btn"
+        type="submit"
+      >
+        <i class="fa fa-search-dollar"></i>
+        Xem lại
+      </button>
+
+      <button
+        *ngIf="isReview"
+        mat-raised-button
+        class="btn spa-btn spa-secondary-btn"
+        type="button"
+        (click)="reinput()"
+      >
+        <i class="fa fa-edit"></i>
+        Sửa lại
+      </button>
+
+      <button
+        *ngIf="isReview && (canEdit || !isEdit)"
+        mat-raised-button
+        class="btn spa-btn spa-primary-btn"
+        type="submit"
+      >
+        <i class="fa fa-save"></i>
+        Lưu
+      </button>
+    </div>
+  </form>
+</div>

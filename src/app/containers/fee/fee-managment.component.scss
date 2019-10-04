@@ -1,0 +1,41 @@
+// new
+.mat-column-list-ip {
+  max-width: 50%;
+}
+
+.mat-column-oparation,
+.mat-column-note {
+  max-width: 25%;
+}
+
+.page-header {
+  margin: 10px 0;
+
+  .page-title {
+    margin-bottom: 20px;
+    color: #666;
+  }
+}
+
+.search-field {
+  width: 800px;
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.filter-container {
+  .filter-condition {
+    width: 700px;
+    display: inline-block;
+  }
+  width: 1000px;
+  mat-form-field {
+    width: 180px;
+    margin-right: 20px;
+  }
+  mat-checkbox {
+    position: relative;
+    top: 10px;
+  }
+}

@@ -1,0 +1,146 @@
+<div class="popup-title">
+  <h4>Cập nhật chi phí</h4>
+</div>
+<div class="container" *ngIf="formGroup">
+  <form [formGroup]="formGroup">
+    <div class="row">
+      <h4>Cập nhật chi phí cho hợp đồng</h4>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-4">
+        <p>Số hợp đồng : {{ income.contractKey }}</p>
+        <p>Chứng thư:</p>
+      </div>
+      <div class="col-md-4">
+        <p>Khách hàng : {{ income.customerName }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Giá trị hóa đơn"
+            [value]="formGroup.get('invoiceValue').value | currencyMaskPipe"
+            formControlName="invoiceValue"
+          />
+          <mat-error *ngIf="formGroup.get('invoiceValue').invalid">Giá trị không hợp lệ</mat-error>
+          <mat-hint align="end">VNĐ</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [value]="formGroup.get('afterTaxValue').value | currencyMaskPipe"
+            placeholder="Sau thuế"
+            formControlName="afterTaxValue"
+          />
+          <mat-error *ngIf="formGroup.get('afterTaxValue').invalid">Giá trị không hợp lệ</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Tiền mặt"
+            [value]="formGroup.get('byCash').value | currencyMaskPipe"
+            formControlName="byCash"
+          />
+          <mat-error *ngIf="formGroup.get('byCash').invalid"> </mat-error>
+          <mat-hint align="end">VNĐ</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Chuyển khoản"
+            [value]="formGroup.get('byBank').value | currencyMaskPipe"
+            formControlName="byBank"
+          />
+          <mat-error *ngIf="formGroup.get('byBank').invalid"> </mat-error>
+          <mat-hint align="end">VNĐ</mat-hint>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Công nợ"
+            [value]="formGroup.get('inDebt').value | currencyMaskPipe"
+            formControlName="inDebt"
+          />
+          <mat-error *ngIf="formGroup.get('inDebt').invalid"> </mat-error>
+        </mat-form-field>
+        <mat-form-field class="textAreaInput">
+          <mat-label>Lý do nợ</mat-label>
+          <textarea matInput placeholder="Lý do nợ" formControlName="inDebtReason"></textarea>
+        </mat-form-field>
+        <mat-form-field class="width-40">
+          <input
+            matInput
+            [matDatepicker]="receivedDate"
+            placeholder="Ngày thu tiền"
+            formControlName="receivedDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="receivedDate"></mat-datepicker-toggle>
+          <mat-datepicker #receivedDate></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Số hóa đơn" formControlName="invoiceCode" />
+          <mat-error *ngIf="formGroup.get('invoiceCode').invalid"> </mat-error>
+          <mat-hint align="end">VNĐ</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="width-40">
+          <input
+            matInput
+            [matDatepicker]="invoicedDate"
+            placeholder="Ngày xuất hóa đơn"
+            formControlName="invoicedDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="invoicedDate"></mat-datepicker-toggle>
+          <mat-datepicker #invoicedDate></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Hoa hồng"
+            [value]="formGroup.get('commission').value | currencyMaskPipe"
+            formControlName="commission"
+          />
+          <mat-error *ngIf="formGroup.get('commission').invalid"> </mat-error>
+          <mat-hint align="end">VNĐ</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="width-40">
+          <input
+            matInput
+            [matDatepicker]="commissionDate"
+            placeholder="Ngày chi hoa hồng"
+            formControlName="commissionDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="commissionDate"></mat-datepicker-toggle>
+          <mat-datepicker #commissionDate></mat-datepicker>
+        </mat-form-field>
+        <mat-checkbox formControlName="contracted"> Có hợp đồng</mat-checkbox>
+        <mat-form-field class="textAreaInput">
+          <mat-label>Ghi chú</mat-label>
+          <textarea matInput placeholder="Ghi chú" formControlName="note"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button mat-raised-button class="btn spa-btn spa-secondary-btn" type="button" (click)="onNoClick()">
+        <i class="fa fa-times"></i>
+        <span>Đóng</span>
+      </button>
+
+      <button *ngIf="!isEdit" mat-raised-button class="btn spa-btn spa-primary-btn" (click)="edit()">
+        <i class="fa fa-edit"></i>
+        <span>Cập nhật</span>
+      </button>
+
+      <button *ngIf="isEdit" mat-raised-button class="btn spa-btn spa-primary-btn" (click)="onSave()">
+        <i class="fa fa-save"></i>
+        <span>Lưu</span>
+      </button>
+    </div>
+  </form>
+</div>
+<!-- type="submit" -->

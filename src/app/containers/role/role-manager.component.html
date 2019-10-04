@@ -1,0 +1,142 @@
+<div class="search-container">
+  <div class="search-field">
+    <mat-form-field appearance="outline" class="employee-search">
+      <mat-label>Tìm kiếm</mat-label>
+      <input matInput [(ngModel)]="empSearchField.keyword" />
+    </mat-form-field>
+  </div>
+  <div class="filter-container">
+    <div class="filter-condition">
+      <mat-form-field class="employee-select">
+        <mat-label>Chi nhánh / Hội sở</mat-label>
+        <mat-select [(value)]="empSearchField.branchId">
+          <mat-option>--Tất cả--</mat-option>
+          <mat-option *ngFor="let branch of listBranches" [value]="branch.id">{{ branch.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="employee-select">
+        <mat-label>Phòng ban</mat-label>
+        <mat-select [(value)]="empSearchField.departmentId">
+          <mat-option>--Tất cả--</mat-option>
+          <mat-option *ngFor="let department of listDepartments" [value]="department.id">{{
+            department.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="employee-select">
+        <mat-label>Chức vụ</mat-label>
+        <mat-select [(value)]="empSearchField.positionId">
+          <mat-option>--Tất cả--</mat-option>
+          <mat-option *ngFor="let position of listPositions" [value]="position.id">{{
+            position.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-checkbox [(ngModel)]="empSearchField.isLocked">Đã khóa</mat-checkbox>
+    </div>
+    <button class="btn-search" mat-raised-button color="primary" (click)="onSearch()">
+      <i class="fa fa-search"></i>
+      <span>Tìm</span>
+    </button>
+  </div>
+</div>
+<div>
+  <mat-table [dataSource]="dataSource">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        Tên
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.fullName }} </mat-cell>
+    </ng-container>
+
+    <!-- Headquarters Column -->
+    <ng-container matColumnDef="headquarters">
+      <mat-header-cell *matHeaderCellDef>Chi nhánh</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.branchName }}</mat-cell>
+    </ng-container>
+
+    <!-- Department Column -->
+    <ng-container matColumnDef="department">
+      <mat-header-cell *matHeaderCellDef>Phòng ban</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.departmentName }}</mat-cell>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef>Chức vụ</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.position }}</mat-cell>
+    </ng-container>
+
+    <!-- Phone Column -->
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef>Điện thoại</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.phoneNumber1 }}</mat-cell>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.officialEmail }}</mat-cell>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="roleName">
+      <mat-header-cell *matHeaderCellDef>Quyền</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.roleName }}</mat-cell>
+    </ng-container>
+
+    <!-- note Column -->
+    <ng-container matColumnDef="operation">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a
+          class="mat-operation-icon"
+          *ngIf="!element.userId"
+          title="Tạo tài khoản"
+          (click)="createAccount(element.id, element.fullName, element.email)"
+        >
+          <i class="fa fa-user-plus"></i>
+        </a>
+        <a
+          *ngIf="element.userId"
+          title="Cập nhật tài khoản"
+          class="mat-operation-icon"
+          (click)="edit(element.id, element.fullName, element.officialEmail, element.userId, element.roleId)"
+          ><i class="fa fa-edit"></i
+        ></a>
+        <a
+          *ngIf="element.userId"
+          [title]="element.isLocked ? 'Mở khóa tài khoản' : 'Khóa tài khoản'"
+          class="mat-operation-icon"
+          (click)="setlock(element.id, element.fullName, element.userId, !element.isLocked)"
+          ><i [class]="element.isLocked ? 'fa fa-unlock' : 'fa fa-lock'"></i
+        ></a>
+        <a
+          *ngIf="element.userId"
+          title="Đổi mật khẩu"
+          class="mat-operation-icon"
+          (click)="
+            changePass(element.id, element.fullName, element.officialEmail, element.userId, element.roleId)
+          "
+          ><i class="fa fa-key"></i
+        ></a>
+        <!-- <a class="mat-operation-icon" title="Xóa người dùng" (click)="openDialog(EButtonType.Delete, element)"
+          ><i class="fa fa-trash delete"></i
+        ></a> -->
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [length]="paging.total"
+    [pageSize]="paging.size"
+    [pageSizeOptions]="paging.pageSizeOptions"
+    (page)="updateList($event)"
+  ></mat-paginator>
+</div>

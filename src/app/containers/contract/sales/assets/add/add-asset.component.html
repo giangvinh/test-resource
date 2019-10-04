@@ -1,0 +1,61 @@
+<div class="container" *ngIf="formGroup">
+  <form [formGroup]="formGroup" (submit)="onSave()">
+    <h5>Thông tin tài sản</h5>
+    <hr />
+    <div>
+      <mat-form-field>
+        <mat-label>Mô tả tài sản</mat-label>
+        <input matInput placeholder="Tên" formControlName="name" />
+        <mat-error *ngIf="formGroup.get('name').invalid">Vui lòng nhập thông tin mô tả tài sản</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Địa chỉ</mat-label>
+        <input matInput placeholder="Địa chỉ" formControlName="addressLine1" />
+      </mat-form-field>
+      <app-multiselect
+        class="width-3"
+        [placeholder]="'Chọn tỉnh/thành'"
+        [options]="states"
+        [multiple]="false"
+        [formControl]="formGroup.controls['stateOrProvinceId']"
+        [label]="'Tỉnh/thành'"
+        (selectionChange)="onCitySelected($event)"
+        ngDefaultControl
+      >
+      </app-multiselect>
+      <app-multiselect
+        class="width-3"
+        [placeholder]="'Chọn quận/huyện'"
+        [options]="districts"
+        [multiple]="false"
+        [formControl]="formGroup.controls['districtId']"
+        [label]="'Quận/huyện'"
+        (selectionChange)="onDistrictSelected($event)"
+        ngDefaultControl
+      >
+      </app-multiselect>
+      <app-multiselect
+        class="width-3"
+        [placeholder]="'Chọn phường/xã'"
+        [options]="wards"
+        [multiple]="false"
+        [formControl]="formGroup.controls['wardId']"
+        [label]="'Phường/xã'"
+        ngDefaultControl
+      >
+      </app-multiselect>
+    </div>
+
+    <div class="toolbar">
+      <button mat-raised-button class="btn spa-btn spa-secondary-btn" type="button" (click)="onNoClick()">
+        <i class="fa fa-times"></i>
+        Đóng
+      </button>
+
+      <button mat-raised-button class="btn spa-btn spa-primary-btn" type="submit">
+        <i class="fa fa-save"></i>
+        Lưu
+      </button>
+    </div>
+  </form>
+</div>

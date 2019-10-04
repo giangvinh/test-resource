@@ -1,0 +1,9 @@
+<button
+  mat-icon-button
+  matSuffix
+  (click)="isVisible = !isVisible"
+  [attr.aria-label]="'Hide password'"
+  [attr.aria-pressed]="isVisible"
+>
+  <i [class]="isVisible ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+</button>

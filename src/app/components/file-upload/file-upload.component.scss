@@ -1,0 +1,13 @@
+.hidden {
+  display: none;
+}
+
+.file-select {
+  i {
+    color: gray;
+    &:hover {
+      color: #333;
+      cursor: pointer;
+    }
+  }
+}

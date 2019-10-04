@@ -1,0 +1,80 @@
+<!-- <div class="popup-title">
+  <h4>Thẩm định</h4>
+</div> -->
+
+<div class="mat-app-background basic-container has-popup-title" *ngIf="contract">
+  <div class="page-header">
+    <div class="section">
+      <h5 class="section-header">Thông tin khách hàng</h5>
+      <hr />
+      <div class="row">
+        <div class="col-md-8">
+          <span>{{ contract.orgName }} {{ contract.orgName ? " - " : "" }} {{ contract.customerName }}</span>
+        </div>
+        <div class="col-md-4">
+          <div>
+            <span>Số điện thoại: </span><em>{{ contract.customerPhoneNumber }}</em>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div>
+            <span>Mục đích thẩm định: </span><em>{{ contract.appraisalPurpose }}</em>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <h5 class="section-header">Thông tin hồ sơ</h5>
+      <hr />
+      <div class="row">
+        <div class="col-md-6">
+          <strong>{{ contract.contractKey }}</strong>
+        </div>
+        <div class="col-md-6">
+          <span>Ngày hết hạn:</span><em>{{ contract.dueDate }}</em>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div>
+            <button mat-raised-button class="btn spa-primary-btn">
+              <i class="fa fa-clock"></i> KH Thẩm định
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <h5 class="section-header">Danh sách tài sản</h5>
+      <hr />
+      <div class="assets-container">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let asset of assets">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <h5>{{ asset.name }}</h5>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ getAddress(asset.address) }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="asset-detail-container">
+              <div class="toolbar">
+                <button
+                  mat-raised-button
+                  title="Nhập kết quả khảo sát"
+                  class="btn spa-primary-btn"
+                  (click)="$event.stopPropagation()"
+                >
+                  <i class="fa fa-edit edit"></i> Kết quả khảo sát
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h1 mat-dialog-title>Phân công TS cho HS {{ data.name }}</h1>
+  </div>
+  <mat-icon
+    class="close-icon"
+    aria-hidden="false"
+    aria-label="Example home icon"
+    (click)="onNoClick()"
+    >close</mat-icon
+  >
+  <div class="dialog-body container-fluid">
+    <app-assign-assets></app-assign-assets>
+    <app-assign-assets></app-assign-assets>
+    <app-assign-assets></app-assign-assets>
+    <app-assign-assets></app-assign-assets>
+  </div>
+  <div class="dialog-control">
+    <button
+      class="diaglog-close-btn"
+      mat-raised-button
+      color="primary"
+      (click)="onNoClick()"
+    >
+      <!-- <mat-icon>close</mat-icon> -->
+      Đóng
+    </button>
+    <button mat-raised-button color="primary">
+      Chỉ định
+    </button>
+  </div>
+  <div class="dialog-footer"></div>
+</div>

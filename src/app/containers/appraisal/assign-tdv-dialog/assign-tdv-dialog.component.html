@@ -1,0 +1,94 @@
+<div class="popup-title">
+  <h4>{{ data.data ? "Chỉnh sửa" : "Thêm mới" }} IP</h4>
+</div>
+<div class="container has-popup-title">
+  <div class="page-header">
+    <div class="search">
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="legacy" class="search-fields">
+            <mat-label>Từ khóa</mat-label>
+            <input matInput placeholder="Từ khóa" [(ngModel)]="keyword" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <button
+            mat-raised-button
+            class="btn spa-primary-btn"
+            (click)="updateList()"
+          >
+            <i class="fa fa-search"></i>
+            Tìm
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="operation">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-checkbox
+            class="example-margin"
+            [(ngModel)]="element.selected"
+            (change)="onSelectUser($event, element.id)"
+          >
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="fullName">
+        <mat-header-cell *matHeaderCellDef> Họ tên</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.fullName }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="processing">
+        <mat-header-cell *matHeaderCellDef> Số HD đang xử lý </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.processing }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+
+    <mat-paginator
+      [length]="paging.total"
+      [pageSize]="paging.size"
+      [pageSizeOptions]="paging.pageSizeOptions"
+      (page)="updateList($event)"
+    >
+    </mat-paginator>
+  </div>
+  <div class="row">
+    <div class="col-md-5">
+      <mat-form-field>
+        <mat-label>Thời hạn</mat-label>
+        <input matInput [matDatepicker]="duePicker" placeholder="Thời hạn" />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="duePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #duePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="toolbar">
+    <button
+      mat-raised-button
+      class="btn spa-btn spa-secondary-btn"
+      type="button"
+      (click)="onNoClick()"
+    >
+      <i class="fa fa-times"></i>
+      <span>Đóng</span>
+    </button>
+    <button mat-raised-button class="btn spa-btn spa-primary-btn">
+      <i class="fa fa-save"></i>
+      <span>Lưu</span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,326 @@
+<div class="popup-title">
+  <h4>{{ data.data ? "Chỉnh sửa" : "Tạo" }} nhân viên</h4>
+  <a (click)="onNoClick()"><i class="fa fa-times"></i></a>
+</div>
+<div class="container has-popup-title" *ngIf="formGroup">
+  <form [formGroup]="formGroup" (submit)="onSavePost()">
+    <div class="row">
+      <h4>Thông tin chung</h4>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>Mã nhân viên (Hệ thống tạo)</mat-label>
+          <input matInput placeholder="Mã NV" formControlName="employeeCode" />
+        </mat-form-field>
+        <mat-form-field class="inputName">
+          <mat-label>Họ và tên</mat-label>
+          <input matInput placeholder="Họ tên" formControlName="fullName" />
+          <mat-error *ngIf="formGroup.get('fullName').invalid">Vui lòng nhập đầy đủ họ tên</mat-error>
+        </mat-form-field>
+
+        <mat-radio-group class="gender" formControlName="gender">
+          <mat-radio-button value="0">Nam</mat-radio-button>
+          <mat-radio-button value="1">Nữ</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field class="width-2">
+          <input
+            matInput
+            [max]="maxBoD"
+            [matDatepicker]="doBpicker"
+            placeholder="Ngày sinh"
+            formControlName="doB"
+          />
+          <mat-datepicker-toggle matSuffix [for]="doBpicker"></mat-datepicker-toggle>
+          <mat-datepicker #doBpicker></mat-datepicker>
+        </mat-form-field>
+        <app-multiselect
+          class="width-2"
+          [placeholder]="'Nơi sinh'"
+          [options]="listCities"
+          [multiple]="false"
+          [formControl]="formGroup.controls['placeOfBirthId']"
+          [label]="'Nơi sinh'"
+          [selectedOptions]="formGroup.controls['placeOfBirthId'].value"
+          ngDefaultControl
+          #placeOfBirth
+        ></app-multiselect>
+        <mat-form-field>
+          <mat-label>CMND / Thẻ căn cước</mat-label>
+          <input matInput placeholder="CMND" formControlName="idCode" />
+          <mat-error *ngIf="formGroup.get('idCode').invalid">Vui lòng nhập số CMND/ số căn cước</mat-error>
+        </mat-form-field>
+        <mat-form-field class="width-2">
+          <mat-label>Ngày cấp</mat-label>
+          <input
+            [max]="dateNow"
+            matInput
+            [matDatepicker]="ngayCap"
+            placeholder="Ngày cấp"
+            formControlName="issuedDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="ngayCap"></mat-datepicker-toggle>
+          <mat-datepicker #ngayCap></mat-datepicker>
+          <mat-error *ngIf="formGroup.get('issuedDate').invalid">Vui lòng nhập ngày cấp</mat-error>
+        </mat-form-field>
+        <app-multiselect
+          class="width-2"
+          [placeholder]="'Nơi cấp'"
+          [options]="listCities"
+          [multiple]="false"
+          [formControl]="formGroup.controls['issuedProvinceId']"
+          [label]="'Nơi cấp'"
+          ngDefaultControl
+          [errorMsg]="'Vui lòng chọn nơi cấp'"
+          #issuedProvince
+        ></app-multiselect>
+
+        <mat-form-field class="width-2 no-margin">
+          <mat-label>Số điện thoại 1</mat-label>
+          <input matInput placeholder="SĐT 1" formControlName="phoneNumber1" />
+          <mat-error *ngIf="formGroup.get('phoneNumber1').invalid">Vui lòng nhập số điện thoại</mat-error>
+        </mat-form-field>
+        <mat-form-field class="width-2">
+          <mat-label>Số điện thoại 2</mat-label>
+          <input matInput placeholder="SĐT 2" formControlName="phoneNumber2" />
+        </mat-form-field>
+        <mat-form-field class="width-2 no-margin">
+          <mat-label>Email công ty</mat-label>
+          <input matInput placeholder="diachiemail@saigonpa.vn" formControlName="officialEmail" />
+          <mat-error *ngIf="formGroup.get('officialEmail').invalid"
+            >Cần nhập chính xác email của saigonpa.vn</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="width-2">
+          <mat-label>Email cá nhân</mat-label>
+          <input matInput placeholder="Email" formControlName="personalEmail" />
+        </mat-form-field>
+        <mat-form-field class="width-2 no-margin">
+          <mat-label>Tình trạng hôn nhân</mat-label>
+          <mat-select formControlName="maritalStatus">
+            <mat-option *ngFor="let status of maritalStatus | enumsToArray" [value]="status.id">{{
+              status.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="width-2">
+          <mat-label>Số con</mat-label>
+          <input matInput placeholder="Số con" formControlName="numberOfChildren" />
+          <mat-error *ngIf="formGroup.get('numberOfChildren').invalid">Chỉ được nhập số</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="">
+          <mat-label>Trình độ học vấn</mat-label>
+          <mat-select formControlName="education">
+            <mat-option *ngFor="let edu of educationStatus | enumsToArray" [value]="edu.id">{{
+              edu.name
+            }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('education').invalid">Vui lòng chọn trình độ học vấn</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Chuyên ngành</mat-label>
+          <input matInput placeholder="Chuyên ngành" formControlName="educationDetail" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Ngày vào làm việc</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker3"
+            [max]="dateNow"
+            placeholder="Ngày vào làm việc"
+            formControlName="workingStartedDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+          <mat-error *ngIf="formGroup.get('workingStartedDate').invalid"
+            >Vui lòng nhập ngày bắt đầu làm việc</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field class="textAreaInput">
+          <mat-label>Quá trình công tác</mat-label>
+          <textarea matInput placeholder="Quá trình công tác" formControlName="workingEvaluated"></textarea>
+        </mat-form-field>
+        <mat-form-field class="textAreaInput">
+          <mat-label>Đánh giá</mat-label>
+          <textarea
+            matInput
+            placeholder="Đánh giá"
+            class="textEvaluate"
+            formControlName="workingQuality"
+          ></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Sở thích</mat-label>
+          <input matInput placeholder="Sở thích" formControlName="hobby" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Địa chỉ</h4>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-6">
+        <h6>Hiện tại</h6>
+        <mat-form-field>
+          <mat-label>Địa chỉ</mat-label>
+          <input matInput placeholder="Địa chỉ" formControlName="currentlyAddressLine1" />
+        </mat-form-field>
+        <app-multiselect
+          class="width-3"
+          [placeholder]="'Chọn tỉnh/thành'"
+          [options]="listCities"
+          [multiple]="false"
+          [formControl]="formGroup.controls['currentlyStateOrProvinceId']"
+          [label]="'Tỉnh/thành'"
+          (selectionChange)="onCitySelected($event)"
+          ngDefaultControl
+          #currentlyState
+        >
+        </app-multiselect>
+        <app-multiselect
+          class="width-3"
+          [placeholder]="'Chọn quận/huyện'"
+          [options]="listDistricts"
+          [multiple]="false"
+          [formControl]="formGroup.controls['currentlyDistrictId']"
+          [label]="'Quận/huyện'"
+          (selectionChange)="onDistrictSelected($event)"
+          ngDefaultControl
+          #currentlyDistrict
+        >
+        </app-multiselect>
+        <app-multiselect
+          class="width-3"
+          [placeholder]="'Chọn phường/xã'"
+          [options]="listWards"
+          [multiple]="false"
+          [formControl]="formGroup.controls['currentlyWardId']"
+          [label]="'Phường/xã'"
+          ngDefaultControl
+          #currentlyWard
+        >
+        </app-multiselect>
+      </div>
+      <div class="col-md-6">
+        <h6>Thường trú</h6>
+        <mat-form-field>
+          <mat-label>Địa chỉ</mat-label>
+          <input matInput placeholder="Địa chỉ" formControlName="permanentlyAddressLine1" />
+        </mat-form-field>
+        <app-multiselect
+          class="width-3"
+          [placeholder]="'Chọn tỉnh/thành'"
+          [options]="listCities"
+          [multiple]="false"
+          [formControl]="formGroup.controls['permanentlyStateOrProvinceId']"
+          [label]="'Tỉnh/thành'"
+          (selectionChange)="onPermanentlyCitySelected($event)"
+          ngDefaultControl
+          #permanentlyState
+        >
+        </app-multiselect>
+        <app-multiselect
+          class="width-3"
+          [placeholder]="'Chọn quận/huyện'"
+          [options]="listPermanentlyDistricts"
+          [multiple]="false"
+          [formControl]="formGroup.controls['permanentlyDistrictId']"
+          [label]="'Quận/huyện'"
+          (selectionChange)="onPermanentlyDistrictSelected($event)"
+          ngDefaultControl
+          #permanentlyDistrict
+        >
+        </app-multiselect>
+        <app-multiselect
+          class="width-3"
+          [placeholder]="'Chọn phường/xã'"
+          [options]="listPermanentlyWards"
+          [multiple]="false"
+          [formControl]="formGroup.controls['permanentlyWardId']"
+          [label]="'Phường/xã'"
+          ngDefaultControl
+          #permanentlyWard
+        >
+        </app-multiselect>
+      </div>
+    </div>
+    <div class="row">
+      <h4>Phòng ban - chức vụ</h4>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field class="mat-select-bottom">
+          <mat-label>Chi nhánh / Hội sở</mat-label>
+          <mat-select formControlName="branchId">
+            <mat-option *ngFor="let branch of listBranches" [value]="branch.id">{{ branch.name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('branchId').invalid"
+            >Vui lòng chọn chi nhánh / hội sở</mat-error
+          > </mat-form-field
+        ><mat-form-field class="mat-select-bottom">
+          <mat-label>Phòng ban</mat-label>
+          <mat-select formControlName="departmentId">
+            <mat-option *ngFor="let department of listDepartments" [value]="department.id">{{
+              department.name
+            }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('departmentId').invalid">Vui lòng chọn phòng ban</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="mat-select-bottom">
+          <mat-label>Chức vụ</mat-label>
+          <mat-select formControlName="positionId">
+            <mat-option *ngFor="let position of listPositions" [value]="position.id">{{
+              position.name
+            }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="formGroup.get('positionId').invalid">Vui lòng chọn chức vụ</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Lĩnh vực chuyên gia</mat-label>
+          <input matInput placeholder="Lĩnh vực chuyên gia" formControlName="professionalAt" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9"></div>
+      <div class="col-md-3">
+        <button
+          mat-raised-button
+          class="btn spa-btn spa-secondary-btn"
+          title="Đóng"
+          type="button"
+          (click)="onNoClick()"
+        >
+          <i class="fa fa-times"></i>
+          Đóng
+        </button>
+        <button
+          mat-raised-button
+          class="btn spa-btn spa-primary-btn"
+          title="Tạo nhân viên"
+          type="submit"
+          *ngIf="data.type"
+        >
+          <i class="fa fa-save"></i>
+          Lưu
+        </button>
+        <!-- <button mat-raised-button color="primary" type="submit" *ngIf="data.type">
+          <mat-icon>add</mat-icon>
+          Tạo nhân viên
+        </button> -->
+        <button mat-raised-button class="btn spa-btn spa-primary-btn" type="submit" *ngIf="!data.type">
+          <i class="fa fa-save"></i>
+          Lưu
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

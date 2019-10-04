@@ -1,0 +1,29 @@
+.user-photo {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  img {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 167ms;
+    display: inline-block;
+    height: 36px;
+    width: 36px;
+    color: #c7d1d8;
+    opacity: 1;
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-left: 0;
+    -webkit-clip-path: none;
+    clip-path: none;
+    transform: scale(1);
+    border-radius: 50%;
+  }
+}
+.user-name {
+  margin-left: 10px;
+}
+
+.user-info {
+  cursor: pointer;
+}

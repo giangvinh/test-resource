@@ -1,0 +1,41 @@
+<mat-form-field appearance="{{ appearance }}" class="{{ class }}">
+  <mat-label>{{ label }}</mat-label>
+  <mat-select
+    #selectElem
+    [placeholder]="placeholder"
+    [formControl]="formControl"
+    [multiple]="multiple"
+    (selectionChange)="onSelectionChange($event)"
+  >
+    <div class="box-search">
+      <mat-checkbox
+        *ngIf="multiple"
+        color="primary"
+        class="box-select-all"
+        [(ngModel)]="selectAllChecked"
+        (change)="toggleSelectAll($event)"
+      ></mat-checkbox>
+      <input
+        #searchInput
+        type="text"
+        [ngClass]="{ 'pl-1': !multiple }"
+        (input)="filterItem(searchInput.value)"
+        placeholder="Từ khóa..."
+      />
+      <i
+        class="fa fa-times box-search-icon"
+        (click)="filterItem(''); searchInput.value = ''"
+      ></i>
+    </div>
+    <mat-select-trigger>
+      {{ displayString }}
+    </mat-select-trigger>
+    <mat-option
+      *ngFor="let option of options"
+      [value]="option.id"
+      [style.display]="hideOption(option) ? 'none' : 'flex'"
+      >{{ option.name }}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="formControl.invalid">{{ errorMsg }}</mat-error>
+</mat-form-field>

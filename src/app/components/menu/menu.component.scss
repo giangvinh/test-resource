@@ -1,0 +1,60 @@
+@import "../../../assets/styles/_colors";
+.menu-section {
+  background-color: #dedede;
+  padding: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.nav {
+  margin-top: 20px;
+  display: block;
+
+  li {
+    a {
+      margin: 10px 15px 0;
+      border-radius: 3px;
+      color: $base-color;
+      padding-left: 10px;
+      padding-right: 10px;
+      text-transform: capitalize;
+      font-size: 13px;
+      padding: 10px 15px;
+      &:hover,
+      :focus {
+        background-color: transparent;
+        outline: none;
+      }
+    }
+
+    &.active > a {
+      background-color: $base-color;
+      box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4);
+
+      i,
+      p {
+        color: #fff;
+      }
+    }
+  }
+
+  i {
+    font-size: 24px;
+    float: left;
+    margin-right: 15px;
+    line-height: 30px;
+    width: 30px;
+    text-align: center;
+    color: #a9afbb;
+  }
+
+  p {
+    margin: 0;
+    line-height: 30px;
+    font-size: 14px;
+    position: relative;
+    display: block;
+    height: auto;
+    white-space: nowrap;
+  }
+}

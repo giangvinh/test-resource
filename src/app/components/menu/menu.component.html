@@ -1,0 +1,32 @@
+<ul class="nav">
+  <!-- Nếu thêm menu cứ bỏ chổ này -->
+  <li class="nav-item" [routerLinkActive]="['active']">
+    <a class="nav-link text-dark" [routerLink]="['/appraisal']">
+      <p><i class="search"></i> Danh sách hồ sơ TĐ - BGĐ</p>
+    </a>
+  </li>
+</ul>
+<ul class="nav">
+  <!-- Nếu thêm menu cứ bỏ chổ này -->
+  <li class="nav-item" [routerLinkActive]="['active']">
+    <a class="nav-link text-dark" [routerLink]="['/employee']">
+      <p><i class="search"></i> Employee</p>
+    </a>
+  </li>
+</ul>
+<!-- <div *ngFor="let section of menuSections$ | async">
+  <h4 class="menu-section" *ngIf="section.title">
+    <i class="material-icons">{{ section.iconClasses }}</i> {{ section.title }}
+  </h4>
+  <ul class="nav">
+    <li
+      *ngFor="let menu of section.menus"
+      class="nav-item"
+      [routerLinkActive]="['active']"
+    >
+      <a class="nav-link text-dark" [routerLink]="[menu.path]">
+        <p><i [class]="menu.iconClasses"></i> {{ menu.name }}</p>
+      </a>
+    </li>
+  </ul>
+</div> -->

@@ -1,0 +1,27 @@
+<div class="container" *ngIf="formGroup">
+  <form [formGroup]="formGroup" (submit)="onSave()">
+    <h5>Thông tin pháp lý tài sản [{{ assetName }}]</h5>
+    <hr />
+    <div>
+      <mat-form-field>
+        <mat-label>Thông tin pháp lý </mat-label>
+        <textarea matInput placeholder="Thông tin pháp lý" formControlName="description"></textarea>
+        <mat-error *ngIf="formGroup.get('description').invalid"
+          >Vui lòng nhập thông tin mô tả pháp lý tài sản</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="toolbar">
+      <button mat-raised-button class="btn spa-btn spa-secondary-btn" type="button" (click)="onNoClick()">
+        <i class="fa fa-times"></i>
+        Đóng
+      </button>
+
+      <button mat-raised-button class="btn spa-btn spa-primary-btn" type="submit">
+        <i class="fa fa-save"></i>
+        Lưu
+      </button>
+    </div>
+  </form>
+</div>

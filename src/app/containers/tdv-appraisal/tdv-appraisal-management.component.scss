@@ -1,0 +1,49 @@
+table {
+  width: 100%;
+}
+
+.mat-column-operation {
+  max-width: 95px;
+  text-align: center;
+}
+
+.appraisalTDV-search {
+  width: 100%;
+}
+
+.appraisalTDV-select {
+  margin-right: 20px;
+}
+
+#appraisalTDV-add-btn {
+  right: 0;
+  position: absolute;
+}
+
+.appraisalTDV-operation-btn {
+  margin: 10px 0;
+}
+
+.appraisalTDV-operation-icon {
+  margin-right: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.appraisalTDV-count {
+  margin-top: 20px;
+}
+
+h5 {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.appraisalTDV-date-picker {
+  margin-right: 20px;
+}
+
+.mat-header-cell {
+  padding-right: 10px;
+}

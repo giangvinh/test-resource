@@ -1,0 +1,49 @@
+table {
+  width: 100%;
+}
+
+.mat-column-operation {
+  max-width: 95px;
+  text-align: center;
+}
+
+.appraisalGD-search {
+  width: 100%;
+}
+
+.appraisalGD-select {
+  margin-right: 20px;
+}
+
+#appraisalGD-add-btn {
+  right: 0;
+  position: absolute;
+}
+
+.appraisalGD-operation-btn {
+  margin: 10px 0;
+}
+
+.appraisalGD-operation-icon {
+  margin-right: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.appraisalGD-count {
+  margin-top: 20px;
+}
+
+h5 {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.appraisalGD-date-picker {
+  margin-right: 20px;
+}
+
+.mat-header-cell {
+  padding-right: 10px;
+}

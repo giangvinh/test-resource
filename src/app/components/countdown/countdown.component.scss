@@ -1,0 +1,16 @@
+.countdown {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  font-size: 26px;
+  .measurements {
+    flex: 0.1;
+
+    .divider {
+      float: right;
+    }
+  }
+}

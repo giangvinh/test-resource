@@ -1,0 +1,51 @@
+<div class="popup-title">
+  <h4>{{ data.data ? "Chỉnh sửa" : "Thêm mới" }} IP</h4>
+</div>
+<div class="container has-popup-title" *ngIf="formGroup">
+  <form [formGroup]="formGroup" (submit)="formGroup.valid ? onSave() : null">
+    <div class="row">
+      <h4>Thêm IP được phép truy cập vào hệ thống</h4>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="IP" formControlName="ip" />
+          <mat-error *ngIf="formGroup.get('ip').invalid"
+            >Nhập địa chỉ IP hợp lệ. Ví dụ: <em>192.168.2.1</em></mat-error
+          >
+        </mat-form-field>
+        <mat-form-field class="inputName">
+          <input matInput placeholder="Người yêu cầu" formControlName="requestedBy" />
+          <mat-error *ngIf="formGroup.get('requestedBy').invalid">Người yêu cầu</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="width-40">
+          <input matInput [matDatepicker]="fromPicker" placeholder="Từ ngày" formControlName="from" />
+          <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="width-40">
+          <input matInput [matDatepicker]="toPicker" placeholder="Đến ngày" formControlName="to" />
+          <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+          <mat-datepicker #toPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="inputName">
+          <input matInput placeholder="Lý do" formControlName="reason" />
+          <mat-error *ngIf="formGroup.get('reason').invalid">Lý do</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button mat-raised-button class="btn spa-btn spa-secondary-btn" type="button" (click)="onNoClick()">
+        <i class="fa fa-times"></i>
+        <span>Đóng</span>
+      </button>
+      <button mat-raised-button class="btn spa-btn spa-primary-btn" type="submit">
+        <i class="fa fa-save"></i>
+        <span>Lưu</span>
+      </button>
+    </div>
+  </form>
+</div>

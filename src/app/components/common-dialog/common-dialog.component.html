@@ -1,0 +1,36 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <h1 mat-dialog-title>
+      <i
+        *ngIf="data.operation === 'XÓA'"
+        class="fa fa-exclamation-circle"
+        style="color:red; font-size: 30px; position: absolute; left: 0;"
+      ></i>
+      Xác nhận
+    </h1>
+    <a class="close-icon" (click)="onNoClick()"><i class="fa fa-remove"></i></a>
+  </div>
+  <div mat-dialog-content>
+    <p>
+      Bạn đồng ý {{ data.operation }} {{ data.component }} {{ data.name }} ?
+    </p>
+  </div>
+  <div mat-dialog-actions>
+    <button
+      mat-button
+      class="btn spa-btn spa-secondary-btn"
+      (click)="onNoClick()"
+      cdkFocusInitial
+    >
+      Không
+    </button>
+    <button
+      mat-button
+      class="btn spa-btn spa-primary-btn"
+      [mat-dialog-close]="true"
+      (click)="onYesClick()"
+    >
+      Có
+    </button>
+  </div>
+</div>

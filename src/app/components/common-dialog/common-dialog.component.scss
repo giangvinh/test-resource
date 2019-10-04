@@ -1,0 +1,22 @@
+.mat-dialog-title,
+.mat-dialog-actions {
+  text-align: center;
+}
+
+.mat-button {
+  width: 48%;
+}
+
+.close-icon {
+  right: -15px;
+  top: -20px;
+  position: absolute;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.dialog-container {
+  position: relative;
+}

@@ -1,0 +1,178 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+// $base-color: #9c27b0;
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "_variables";
+@import "_buttons";
+a {
+  color: #0366d6;
+}
+
+// code {
+//   color: #e01a76;
+// }
+
+.mat-form-field {
+  width: 100%;
+  margin-top: 0px;
+}
+
+// .btn-primary {
+//   color: #fff;
+//   background-color: #1b6ec2;
+//   border-color: #1861ac;
+// }
+.spa-btn + .spa-btn {
+  margin-left: 10px;
+}
+.mat-flat-button {
+  margin: 5px !important;
+}
+
+// hr {
+//   border: 0;
+//   height: 1px;
+//   background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+// }
+
+// button {
+//   padding: 0 10px 0 5px !important;
+// }
+.toolbar {
+  margin: 10px 0;
+  display: flex;
+  justify-content: flex-end;
+  button {
+    i {
+      margin-right: 10px;
+    }
+  }
+}
+
+.sub-toolbar {
+  margin: 0px 20px;
+  display: flex;
+  justify-content: flex-end;
+  .spa-btn {
+    padding: 0 !important;
+    i {
+      margin: 0px;
+    }
+  }
+}
+
+mat-table,
+mat-paginator {
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  mat-header-cell {
+    font-size: 14px !important;
+    color: $base-color !important;
+    font-weight: bold !important;
+  }
+}
+
+.width-2 {
+  width: calc(50% - 10px) !important;
+}
+.width-2 + .width-2 {
+  margin-left: 20px;
+}
+
+.width-3 {
+  width: calc(32.5% - 10px) !important;
+}
+.width-3 + .width-3 {
+  margin-left: 20px;
+}
+
+.no-margin {
+  margin-left: 0px !important;
+}
+.mat-operation-icon {
+  margin-right: 15px;
+
+  i.edit {
+    color: $base-color;
+  }
+  i.delete {
+    color: red;
+  }
+  i {
+    color: gray;
+    font-size: 18px;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    i {
+      color: darkgray;
+    }
+  }
+}
+.pull-left {
+  float: left !important;
+}
+.mat-dialog-container {
+  position: relative;
+}
+.has-popup-title {
+  margin-top: 65px !important;
+}
+.popup-title {
+  color: #fff;
+  background-color: $base-color;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  a {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    cursor: pointer;
+  }
+}
+.paper-images {
+  display: flex;
+  .img-container + .img-container {
+    margin-left: 10px;
+  }
+  .img-container {
+    width: 120px;
+    height: 90px;
+    position: relative;
+    display: flex;
+    background-color: black;
+    border-radius: 5px;
+    overflow: hidden;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .img-del {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      color: red;
+      opacity: 0.6;
+      &:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.section {
+  .section-header {
+    color: gray;
+  }
+}
+.section + .section {
+  margin-top: 20px;
+}

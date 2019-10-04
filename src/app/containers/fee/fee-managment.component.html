@@ -1,0 +1,185 @@
+<div class="mat-app-background basic-container">
+  <form [formGroup]="searchForm" *ngIf="searchForm">
+    <div class="search-container">
+      <div class="search-field">
+        <mat-form-field appearance="outline">
+          <mat-label>Tìm kiếm</mat-label>
+          <input matInput formControlName="keyword" />
+        </mat-form-field>
+      </div>
+      <div class="filter-container">
+        <div class="filter-condition">
+          <mat-form-field>
+            <mat-label>Từ ngày</mat-label>
+            <input matInput [matDatepicker]="fromPicker" placeholder="Từ ngày" formControlName="fromDate" />
+            <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromPicker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Đến ngày</mat-label>
+            <input matInput [matDatepicker]="toPicker" placeholder="Đến ngày" formControlName="toDate" />
+            <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+            <mat-datepicker #toPicker></mat-datepicker>
+          </mat-form-field>
+          <button mat-raised-button class="btn spa-btn spa-primary-btn" (click)="updateList()">
+            <i class="fa fa-search"></i>
+            Tìm kiếm
+          </button>
+        </div>
+        <div class="filter-condition">
+          <mat-form-field>
+            <mat-label>Công nợ</mat-label>
+            <mat-select formControlName="inDebt">
+              <mat-option *ngFor="let inDebt of EInDebtFilter | enumsBoolToArray" [value]="inDebt.id">{{
+                inDebt.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Hóa đơn</mat-label>
+            <mat-select formControlName="invoice">
+              <mat-option *ngFor="let invoice of EInvoiceFilter | enumsBoolToArray" [value]="invoice.id">{{
+                invoice.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Hoa hồng</mat-label>
+            <mat-select formControlName="commission">
+              <mat-option
+                *ngFor="let commission of ECommissionFilter | enumsBoolToArray"
+                [value]="commission.id"
+                >{{ commission.name }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="toolbar"></div>
+  <div>
+    <mat-table [dataSource]="dataSource" class="">
+      <ng-container matColumnDef="contractKey">
+        <mat-header-cell *matHeaderCellDef>
+          Mã HS
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.contractKey }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="customerName">
+        <mat-header-cell *matHeaderCellDef> Khách hàng </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.customerName }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="certificates">
+        <mat-header-cell *matHeaderCellDef> Chứng thư </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.certificates }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="invoiceValue">
+        <mat-header-cell *matHeaderCellDef>GT HĐ</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.invoiceValue | currencyMaskPipe }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="afterTaxValue">
+        <mat-header-cell *matHeaderCellDef>Sau</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.afterTaxValue | currencyMaskPipe }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="paid">
+        <mat-header-cell *matHeaderCellDef>Đã thu</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.byCash + element.byBank | currencyMaskPipe }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="inDebt">
+        <mat-header-cell *matHeaderCellDef>Công nợ</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.inDebt | currencyMaskPipe }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="inDebtReason">
+        <mat-header-cell *matHeaderCellDef>L.do công nợ</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.inDebtReason }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="receivedDate">
+        <mat-header-cell *matHeaderCellDef>Ngày thu tiền</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.receivedDate }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="invoiceCode">
+        <mat-header-cell *matHeaderCellDef>Số hóa đơn</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.invoiceCode }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="invoicedDate">
+        <mat-header-cell *matHeaderCellDef>Ngày xuất HD</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.invoicedDate }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="commission">
+        <mat-header-cell *matHeaderCellDef>Hoa hồng</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.commission | currencyMaskPipe }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="commissionDate">
+        <mat-header-cell *matHeaderCellDef>Ngày chi HH</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.commissionDate }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="contracted">
+        <mat-header-cell *matHeaderCellDef>CÓ HD</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.contracted ? "Đã ký" : "Chưa ký" }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="note">
+        <mat-header-cell *matHeaderCellDef>Lưu ý</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.note }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="operations">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a class="mat-operation-icon" (click)="updateFee(element)">
+            <i class="fa fa-money-bill edit"></i>
+          </a>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <mat-paginator
+      [length]="paging.total"
+      [pageSize]="paging.size"
+      [pageSizeOptions]="paging.pageSizeOptions"
+      (page)="updateList($event)"
+    >
+    </mat-paginator>
+  </div>
+</div>

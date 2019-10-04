@@ -1,0 +1,13 @@
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.7.1/oidc-client.min.js"></script>
+    <script>
+        new Oidc.UserManager().signinSilentCallback()
+            .catch((err) => {
+                console.log(err);
+            });
+    </script>
+</body>

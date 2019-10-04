@@ -1,0 +1,93 @@
+<div class="mat-app-background basic-container">
+  <div class="toolbar">
+    <button mat-raised-button class="btn spa-btn spa-primary-btn" (click)="openAddIpWhitelist()">
+      <!-- <mat-icon class="mat-operation-icon" aria-hidden="false" aria-label="Example home icon">add</mat-icon> -->
+      <i class="fa fa-plus"></i>
+      Thêm
+    </button>
+  </div>
+  <div>
+    <mat-table [dataSource]="dataSource" class="">
+      <ng-container matColumnDef="ip">
+        <mat-header-cell *matHeaderCellDef>
+          IP
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"
+          ><i class="fa fa-lock" *ngIf="!element.isActive"></i> {{ element.ip }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="from">
+        <mat-header-cell *matHeaderCellDef> Từ ngày </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.from | date }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="to">
+        <mat-header-cell *matHeaderCellDef> Tới ngày </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.to | date }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="requestedBy">
+        <mat-header-cell *matHeaderCellDef> Người yêu cầu </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.requestedBy }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="reason">
+        <mat-header-cell *matHeaderCellDef> Lý do </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.reason }} </mat-cell>
+      </ng-container>
+
+      <!-- operation Column -->
+      <ng-container matColumnDef="operation">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a title="Sửa thông tin" class="mat-operation-icon" (click)="edit(element)"
+            ><i class="fa fa-pencil-alt edit"></i
+          ></a>
+
+          <a
+            title="Khóa"
+            class="mat-operation-icon"
+            *ngIf="element.isActive"
+            (click)="openDialog(EButtonType.Lock, element.id, element.ip)"
+            ><i class="fa fa-lock"></i
+          ></a>
+
+          <a
+            title="Mở khóa"
+            class="mat-operation-icon"
+            *ngIf="!element.isActive"
+            (click)="openDialog(EButtonType.Unlock, element.id, element.ip)"
+            ><i class="fa fa-unlock"></i
+          ></a>
+
+          <a
+            title="Xóa"
+            class="mat-operation-icon"
+            (click)="openDialog(EButtonType.Delete, element.id, element.ip)"
+            ><i class="fa fa-times delete"></i
+          ></a>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+    <mat-paginator
+      [length]="paging.total"
+      [pageSize]="paging.size"
+      [pageSizeOptions]="paging.pageSizeOptions"
+      (page)="updateList($event)"
+    >
+    </mat-paginator>
+  </div>
+  <!-- <div class="cardx">
+    <div class="card-header card-header-primary">
+      <h4>table</h4>
+      <p class="card-category">subtitle</p>
+    </div>
+    <div class="card-body">
+
+    </div>
+  </div> -->
+</div>

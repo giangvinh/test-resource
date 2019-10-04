@@ -1,0 +1,49 @@
+<div class="mat-app-background basic-container">
+  <div class="page-header">
+    <form [formGroup]="searchForm" *ngIf="searchForm">
+      <div class="search">
+        <div class="row">
+          <div class="col-md-8">
+            <mat-form-field appearance="legacy" class="search-fields">
+              <mat-label>Tên / MST</mat-label>
+              <input matInput placeholder="Từ khóa" formControlName="keyword" />
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <button mat-raised-button class="btn spa-primary-btn" (click)="updateList()">
+              <i class="fa fa-search"></i>
+              Tìm
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="toolbar"></div>
+    </form>
+  </div>
+  <div class="">
+    <mat-table [dataSource]="dataSource" class="">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>
+          Tên đơn vị
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="taxCode">
+        <mat-header-cell *matHeaderCellDef> MST </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.taxCode }} </mat-cell>
+      </ng-container>
+
+      <!-- operation Column -->
+      <ng-container matColumnDef="operation">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a title="Chọn" class="mat-operation-icon" (click)="select(element)"><i class="fa fa-check"></i></a>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>
